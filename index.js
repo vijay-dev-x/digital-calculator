@@ -38,7 +38,7 @@ app.post("/sum", (req, res) => {
 
   const sum = num1 + num2;
 
-  res.send(`The sum of ${num1} and ${num2} is ${sum}`);
+  res.json({ msg: `The sum of ${num1} and ${num2} is ${sum}`, value: sum });
 });
 //   listen--
 
