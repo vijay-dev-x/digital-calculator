@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/userModel");
-const db = require("../lib/firebase.js");
+const admin = require("../lib/firebase.js");
 
 // add user
 
@@ -30,13 +30,19 @@ router.post("/", async (req, res) => {
 // firestore api
 
 router.post("/signup", async (req, res, next) => {
-  try {
-    const userData = req.body;
-    const docRef = await db.collection("userDetails").add(userData);
+  const { email, password, displayName } = req.body;
 
-    res
-      .status(201)
-      .send({ message: "User created successfully", id: docRef.id });
+  try {
+    const userRecord = await admin.auth().createUser({
+      email,
+      password,
+      displayName,
+    });
+
+    res.status(201).send({
+      message: "User created successfully",
+      user: userRecord,
+    });
   } catch (error) {
     console.error("Error creating user:", error);
     res
