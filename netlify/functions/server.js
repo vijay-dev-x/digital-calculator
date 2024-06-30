@@ -30,7 +30,7 @@ app.use("/api/user", userRoute);
 
 // Hello route
 app.get("/", (req, res) => {
-  res.send("Hello 2");
+  res.send("Hello 3");
 });
 
 // Error-Handling Middleware

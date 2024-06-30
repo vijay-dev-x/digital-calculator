@@ -5,7 +5,6 @@ const userModel = "./models/userModel.js";
 const bodyParser = require("body-parser");
 const userRoute = require("./routes/userRoute.js");
 const cors = require("cors");
-
 // -------
 const port = 3005;
 

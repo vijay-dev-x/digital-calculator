@@ -2,34 +2,35 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/userModel");
 const admin = require("../lib/firebase.js");
+const authenticateJWT = require("../lib/jwt.js"); // Adjust the path if needed
 
 // add user
 
 router.post("/", async (req, res) => {
-  const { firstName, lastName, phone, email, leadSource, leadStatus, note } =
-    req.body;
+  const { name, email, phone, whatsapp, course, status, stage } = req.body;
 
   try {
     const newUser = new User({
-      firstName,
-      lastName,
-      phone,
+      name,
       email,
-      leadSource,
-      leadStatus,
-      note,
+      phone,
+      whatsapp,
+      course,
+      status,
+      stage,
     });
 
     const user = await newUser.save();
     res.json(user);
     console.log(user);
   } catch (err) {
+    console.log(err);
     res.status(500).send(err.errorResponse);
   }
 });
+// Firestore API
 // firestore api
-
-router.post("/signup", async (req, res, next) => {
+router.post("/signup", authenticateJWT, async (req, res, next) => {
   const { email, password, displayName } = req.body;
 
   try {
@@ -48,9 +49,10 @@ router.post("/signup", async (req, res, next) => {
     res
       .status(500)
       .send({ message: "Error creating user", error: error.message });
-    next(err);
+    next(error);
   }
 });
+
 // find all user
 router.get("/", async (req, res, next) => {
   try {
