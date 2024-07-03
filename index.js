@@ -1,19 +1,15 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const app = express();
-const userModel = "./models/userModel.js";
 const bodyParser = require("body-parser");
 const userRoute = require("./routes/userRoute.js");
 const cors = require("cors");
-// -------
-const port = 3005;
+require("dotenv").config();
 
 // mongo---
-const atlasUrl =
-  "mongodb+srv://vtf4592:Rd%401122334455@cluster0.i0swkwz.mongodb.net/lists";
 
 mongoose
-  .connect(atlasUrl)
+  .connect(process.env.ATLAS_URL)
   .then(() => {
     console.log("mongodb connected");
   })
@@ -30,7 +26,7 @@ app.use(cors()); // Enable CORS for all routes
 // hello route
 
 app.get("/", (req, res) => {
-  res.send("Hello");
+  res.send("Hello 2");
 });
 // Error-Handling Middleware
 app.use((err, req, res, next) => {
@@ -40,6 +36,6 @@ app.use((err, req, res, next) => {
 
 // connect to mongoose--
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });

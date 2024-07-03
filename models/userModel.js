@@ -8,7 +8,7 @@ const UserSchema = new Schema(
     phone: { type: String, required: true },
     whatsapp: { type: String, required: true },
     course: { type: String, required: true },
-    comments: { type: String },
+    status: { type: String },
     stage: { type: String },
   },
   {
